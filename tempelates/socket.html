@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Story</title>
+  <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+</head>
+<body>
+
+  <h1>Choose Your Story</h1>
+
+  <!-- Example button to choose an option -->
+  <button id="storyOption">Choose Option</button>
+
+  <script>
+    // Connect to the backend Socket.IO server
+    const socket = io('http://localhost:5000');  // Ensure the port matches your backend
+
+    // Listen for updates to the story
+    socket.on('storyUpdated', (data) => {
+      console.log('Story updated:', data);
+      // Update the UI based on the new story data
+      document.body.innerHTML += `<p>${data.choice}</p>`;  // Example: add story updates to the page
+    });
+
+    // Send user choices to the server when the button is clicked
+    document.getElementById('storyOption').addEventListener('click', () => {
+      socket.emit('chooseStoryOption', { choice: 'User selected an option!' });
+    });
+  </script>
+
+</body>
+</html>

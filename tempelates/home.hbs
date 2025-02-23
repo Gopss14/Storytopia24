@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Storytopia</title> 
+        <link rel="stylesheet" href="/public/home.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+        {{!-- <link rel="stylesheet" href="/public/login.css"> --}}
+        <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+
+        <style>
+            /* Custom style for the navbar with lavender color */
+            .navbar-purple {
+                background-color: #87CEFA; /* Lavender color */
+            }
+            
+            /* Custom style for the dropdown menu */
+            .dropdown-menu-custom {
+                background-color: #E6E6FA; /* Lavender color */
+            }
+            
+            .dropdown-item {
+                color: #000; /* Text color for dropdown items */
+            }
+            
+            .dropdown-item:hover,
+            .dropdown-item:focus {
+                background-color: #D3D3D3; /* Light grey color for hover and focus */
+            }
+            
+            .dropdown-item.active {
+                background-color: #6f42c1; /* Purple color for active state */
+                color: #fff; /* White text for active state to contrast with purple background */
+            }
+
+            /* Custom style for the "Create Your Own Story" button */
+            .btn-purple {
+                background-color: #f36fff; /* Purple color */
+                color: #000000; /* Black text color */
+                border: none; /* Remove border */
+            }
+            
+            .btn-purple:hover {
+                background-color: #ee50ff; /* Darker purple for hover effect */
+            }
+
+            /* Blurry box styles */
+             
+
+            /* Styles for the 200x200 boxes */
+            .box-wrapper {
+                margin-top: 700px; /* Space between the blurry box and the boxes */
+            }
+
+            .box-container {
+                display: flex; /* Align boxes in a line */
+                justify-content: space-around; /* Space boxes evenly */
+                margin-bottom: 20px; /* Space between rows */
+            }
+
+            .box {
+                width: 200px; /* Set width of the box */
+                height: 200px; /* Set height of the box */
+                background-color: #87CEFA; /* Mild lavender color */
+                border-radius: 10px; /* Rounded corners */
+                display: flex; /* Flexbox to center content */
+                align-items: center; /* Center content vertically */
+                justify-content: center; /* Center content horizontally */
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional shadow for depth */
+                margin: 0 10px; /* Space between boxes */
+            }
+
+            .box img {
+                max-width: 100%; /* Make sure the image fits within the box */
+                max-height: 100%; /* Make sure the image fits within the box */
+                object-fit: cover; /* Ensure the image covers the box without distortion */
+                border-radius: 10px; /* Rounded corners */
+            }
+            .navbar-purple {
+                background-color: #6a0dad; /* Example purple color */
+                color: white; /* Adjust text color */
+             }
+  
+            .btn-outline-light {
+               border-color: white;
+               color: white;
+            }
+  
+            .dropdown-menu-custom {
+              background-color: #f0f0f0; /* Example dropdown background color */
+            }
+  
+            .box-container {
+             display: flex; /* Align boxes in a line */
+             justify-content: space-between; /* Space boxes evenly with space between them */
+             flex-wrap: wrap; /* Allow boxes to wrap on smaller screens */
+             margin: 50px auto; /* Margin to add space above and below containers */
+             padding: 10px; /* Adjust padding for better spacing */
+             max-width: 90%; /* Container width */
+             gap: 20px; /* Space between boxes */
+            }
+  
+            section {
+             padding: 60px 14% 70px;
+            }
+   
+            /* Ensure the section covers the full viewport height */
+            .home {
+             position: relative;
+             width: 100%;
+             height: 100vh; /* Full viewport height */
+             background-image: url('/Story-main/story3.jpg'); 
+             background-image: url('https://i.pinimg.com/originals/63/b7/77/63b777bb69ae070f7d112719f63b0f4d.gif');
+             
+             background-size: cover; /* Cover the section */
+             background-position: center; /* Center the background image */
+             background-repeat: no-repeat; /* Prevent image repetition */
+             color: #fff; /* Text color to ensure readability on top of the image */
+             display: flex;
+             align-items: center; /* Center content vertically */
+             justify-content: center; /* Center content horizontally */
+             text-align: center; /* Center text horizontally */
+            }
+  
+           .home-text {
+              position: relative; /* Position relative to ensure it's on top of the background image */
+              z-index: 1; /* Ensure text is above the background image */
+            }
+  
+           .home-text h1, .home-text p {
+              margin: 0;
+            }
+  
+           .home-text h1 {
+             font-size: 3rem; /* Adjust font size as needed */
+             line-height: 1.2;
+            }
+  
+  .home-text p {
+    font-size: 1.2rem; /* Adjust font size as needed */
+    margin-top: 10px;
+  }
+  
+  .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: #ff6f61; /* Adjust button color */
+    color: #fff; /* Button text color */
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+  }
+  
+  .btn:hover {
+    background-color: #ff3b30; /* Adjust hover color */
+  }
+  /* Ensure general styling for the section */
+  /* General styling for the section */
+  .new-product {
+    padding: 20px; /* Padding around the section */
+    background-color: #f9f9f9; /* Background color for section */
+  }
+  
+  /* Ensure each h1 starts on a new line with additional spacing */
+  .new-product h1 {
+    font-size: 2.5rem; /* Size of the heading */
+    font-family: 'Arial', sans-serif; /* Font style */
+    font-weight: bold; /* Bold text */
+    color: #333; /* Dark color */
+    text-align: center; /* Center align text */
+    margin: 40px 0; /* Margin around heading to add space above and below */
+    padding-left: 15px; /* Padding to the left */
+    padding-right: 15px; /* Padding to the right for symmetry */
+    border-left: 5px solid #ff6f61; /* Decorative left border */
+    text-transform: uppercase; /* Uppercase text */
+    letter-spacing: 1px; /* Spacing between letters */
+    position: relative; /* Positioning context for pseudo-element */
+    line-height: 1.2; /* Line height for better spacing */
+    display: flex; /* Allow for border and centering */
+  }
+
+  .new-product .topic h1{
+    margin: 0;
+  }
+  
+  .topic h1{
+    font-size: 2.5rem; /* Size of the heading */
+    font-family: 'Arial', sans-serif; /* Font style */
+    font-weight: bold; /* Bold text */
+    color: #333; /* Dark color */
+    text-align: center; /* Center align text */
+    margin: 40px 0; /* Margin around heading to add space above and below */
+    padding-left: 15px; /* Padding to the left */
+    padding-right: 15px; /* Padding to the right for symmetry */
+    border-left: 5px solid #ff6f61; /* Decorative left border */
+    text-transform: uppercase; /* Uppercase text */
+    letter-spacing: 1px; /* Spacing between letters */
+    position: relative; /* Positioning context for pseudo-element */
+    line-height: 1.2; /* Line height for better spacing */
+    display: flex; /* Allow for bor*/
+
+  }
+  
+   /* Add a decorative line below the heading */
+  .topic h1::after {
+    content: ""; /* Empty content for the pseudo-element */
+    display: block; /* Make it a block-level element */
+    width: 100%; /* Full width of the h1 element */
+    height: 2px; /* Thickness of the line */
+    background-color: #ff6f61; /* Line color */
+    position: absolute; /* Position relative to the h1 element */
+    left: 0; /* Align with the left edge of the h1 */
+    bottom: -10px; /* Position the line below the h1, adjust as needed */
+  }
+
+.topic2 h1{
+    font-size: 2.5rem; /* Size of the heading */
+    font-family: 'Arial', sans-serif; /* Font style */
+    font-weight: bold; /* Bold text */
+    color: #333; /* Dark color */
+    text-align: center; /* Center align text */
+    margin: 40px 0; /* Margin around heading to add space above and below */
+    padding-left: 15px; /* Padding to the left */
+    padding-right: 15px; /* Padding to the right for symmetry */
+    border-left: 5px solid #ff6f61; /* Decorative left border */
+    text-transform: uppercase; /* Uppercase text */
+    letter-spacing: 1px; /* Spacing between letters */
+    position: relative; /* Positioning context for pseudo-element */
+    line-height: 1.2; /* Line height for better spacing */
+    display: flex; /* Allow for bor*/
+
+  }
+  
+   /* Add a decorative line below the heading */
+  .topic2 h1::after {
+    content: ""; /* Empty content for the pseudo-element */
+    display: block; /* Make it a block-level element */
+    width: 100%; /* Full width of the h1 element */
+    height: 2px; /* Thickness of the line */
+    background-color: #ff6f61; /* Line color */
+    position: absolute; /* Position relative to the h1 element */
+    left: 0; /* Align with the left edge of the h1 */
+    bottom: -10px; /* Position the line below the h1, adjust as needed */
+  }
+  /* Flexbox container for heading and image grid */
+  .section-wrapper {
+    margin-bottom: 0; /* Margin below each section */
+  }
+  
+  /* Grid layout for images */
+  .image-grid {
+    display: grid; /* Use grid layout */
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Responsive columns */
+    gap: 20px; /* Space between images */
+  }
+  
+  /* Styling for individual image items */
+  .image-item {
+    overflow: hidden; /* Hide overflow to maintain aspect ratio */
+    border-radius: 8px; /* Rounded corners */
+    background-color: #fff; /* Background color for image container */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for image container */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth scaling and shadow effect */
+  }
+  
+  /* Styling for images to make them fit within their container */
+  .image-item img {
+    width: 100%; /* Make image responsive */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Remove inline spacing */
+    transition: transform 0.3s ease; /* Smooth scaling effect */
+  }
+  
+  /* Optional: Hover effect for images */
+  .image-item:hover {
+    transform: scale(1.05); /* Slightly scale up on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhance shadow effect on hover */
+  }
+  
+  .centre-text h2 {
+    text-align: center;
+    font-size: var(--h2-font);
+    font-weight: 800;
+    color: var(--text-color);
+    gap: 0;
+  }
+  
+  .new-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, auto));
+    align-items: center;
+    gap: 2.5rem;
+    margin-top: 4.5rem;
+    text-align: center;
+  }
+  
+  .row {
+    position: relative;
+    width: 100%; /* Ensure the boxes fill the available width */
+    max-width: 300px; /* Set a maximum width for the boxes */
+    height: 350px; /* Set a fixed height for the boxes */
+    overflow: hidden; /* Hide any overflow from the images */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+  }
+  
+  .row img {
+    width: 100%;
+    height:100%; /* Maintain the aspect ratio of the image */
+    object-fit: cover; /* Ensure the image covers the container without distortion */
+    /*margin-bottom: 15px;*/
+    display: block;
+  }
+  
+  .row h4 {
+    font-size: 14px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    font-weight: 400;
+    transition: all 0.5s ease;
+  }
+  
+  .row h4:hover {
+    color: var(--main-color);
+  }
+  
+  .row h5 {
+    color: var(--other-color);
+    font-size: var(--p-font);
+    font-weight: 600;
+  }
+  
+  .top {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    height: 30px;
+    width: 60px;
+    color: var(--bg-color);
+    background: var(--main-color);
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .row .bbtn a {
+    position: absolute;
+    bottom: 65px;
+    left: 0;
+    right: 0;
+    padding: 13px;
+    background: rgba(0, 0, 0, 0.8);
+    color: var(--bg-color);
+    transition: opacity 0.5s;
+    opacity: 0;
+  }
+  
+  .row:hover .bbtn a {
+    opacity: 1;
+  }
+  
+  .para {
+    font-size: 20px;
+    font-weight: 600;
+    margin-left: 120px;
+  }
+  
+  .add-btn {
+    padding: 12px 16px;
+    background: rgb(176, 57, 77);
+    color: var(--bg-color);
+    font-size: 16px;
+    font-weight: 540;
+    text-transform: uppercase;
+    border-radius: 30px;
+    transition: all 0.5s ease;
+    margin-left: 124px;
+    margin-top: 10px;
+    cursor: pointer;
+  }
+  
+  .add-btn:hover {
+    background: var(--2nd-color);
+  }
+  
+  .blog-img2 {
+    width: 100%;
+    height: auto;
+  }
+  
+  .blog-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, auto));
+    align-items: center;
+    gap: 2.5rem;
+    margin-top: 4.5rem;
+  }
+  
+  .box-img:hover img {
+    transform: scale(1.1);
+  }
+  
+  .para2 {
+    padding-top: 12px;
+  }
+  
+  .in-bxx {
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  
+  .in-text p {
+    color: var(--other-color);
+    font-size: 15px;
+    font-weight: 500;
+  }
+  
+  .in-icon i {
+    vertical-align: middle;
+    color: var(--other-color);
+    font-size: 25px;
+    margin-right: 8px;
+  }
+  
+  .in-icon a {
+    color: var(--other-color);
+    font-size: 15px;
+    font-weight: 500;
+  }
+  
+  .main-box h3 {
+    color: var(--text-color);
+    font-size: var(--p-font);
+    font-weight: 500;
+    line-height: 30px;
+    transition: all 0.5s ease;
+    cursor: pointer;
+  }
+  
+  .main-box h3:hover {
+    color: var(--main-color);
+  }
+  
+  /* Contact */
+  .contact {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, auto));
+    gap: 2.5rem;
+    background: #272829;
+  }
+  
+  .contact-box h4 {
+    margin-bottom: 1.5rem;
+    font-size: 18px;
+    color: white;
+    
+  }
+  
+  .contact-box li {
+    margin-bottom: 18px;
+  }
+  
+  .contact-box li a {
+    display: block;
+    color: #999999;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.5s ease;
+  }
+  
+  .contact-box li a:hover {
+    transform: translateX(-7px);
+    color: red;
+  }
+  
+  .contact-box h5 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #999999;
+  }
+  
+  .social {
+    display: flex;
+    margin-top: 1.8rem;
+  }
+  
+  .social i {
+    height: 37px;
+    width: 37px;
+    background: transparent;
+    border: 2px solid rebeccapurple;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 20px;
+    margin-right: 1.1rem;
+    color: red;
+    transition: all 0.5s ease;
+  }
+  
+  .social i:hover {
+    background: var(--main-color);
+    color: red;
+    transform: scale(1.1);
+  }
+  
+  .end-text p {
+    text-align: center;
+    background: #272829;
+    color:gray;
+    font-size: 15px;
+    letter-spacing: 1px;
+    padding: 20px;
+  }
+  
+  .scroll-top {
+    position: fixed;
+    bottom: 2.3rem;
+    right: 2.3rem;
+  }
+  
+  .scroll-top i {
+    background: rgb(254, 26, 26);
+    color:red;
+    font-size: 22px;
+    padding: 12px;
+    border-radius: 30px;
+  }
+  
+  /* Media Queries */
+  @media (max-width: 1200px) {
+    header {
+        padding: 12px 3%;
+    }
+    section {
+        padding: 40px 3% 50px;
+    }
+  }
+  
+  @media (max-width: 920px) {
+    #menu-icon {
+        display: block;
+    }
+    .navbar {
+        position: absolute;
+        top: -800px;
+        left: 0;
+        right: 0;
+        display: flex;
+        flex-direction: column;
+        background: var(--main-color);
+        transition: all 0.5s ease;
+    }
+    .navbar a {
+        display: block;
+        padding: 5px;
+        margin: 15px;
+        font-size: 20px;
+        font-weight: 600;
+    }
+    .navbar a:hover {
+        color: var(--bg-color);
+    }
+    .navbar.active {
+        top: 100%;
+    }
+  }
+  
+  @media (max-width: 640px) {
+    :root {
+        --big-font: 3.8rem;
+        --h2-font: 2rem;
+        --p-font: 1.1rem;
+    }
+    .home-text h1 {
+        line-height: 1.1;
+    }
+    .home {
+        height: 85vh;
+    }
+  }
+  
+        </style>
+</head>
+<body>
+
+    {{!-- <header>
+        <img src="https://img.freepik.com/premium-vector/st-typography-icon-with-calligraphy-letters_302321-3215.jpg" alt="" style="width: 150px; height: auto;">
+    </header> --}}
+
+    <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg bg-body-tertiary"style="position:fixed;top: 0;               /* Sticks it to the top */
+  left: 0;
+  width: 100%;      
+  padding: 15px;
+  z-index: 1000;" >
+          <div class="container-fluid">
+            <a class="navbar-brand" href="#">Storytopia</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Features</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Pricing</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Dropdown link
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+            {{!-- <form class="d-flex" role="search">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form> --}}
+            <form class="d-flex" role="search"></form>
+               <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+               <button class="btn btn-outline-success " type="submit">Search</button>
+            </form>
+            {{!-- <div class="toggle">
+                   <input type="checkbox" id="btn">
+                   <label for="btn">
+                      <span class="thumb"></span>
+                   </label>
+            </div> --}}
+        </nav>
+         
+        
+    <!----home section-->
+    <section class="home">
+        {{!-- <div>
+          <img src="" alt="">
+        </div> --}}
+
+        <div class="home-text">
+          <h1>Dive into a world of imagination <br> craft your own fairy tales with our enchanting collection</h1>
+          <p>Unlock the magic of storytelling by designing your own narrative. <br> Personalize every chapter and character to create a tale that’s not just unique,<br> but a true reflection of your vision and dreams!</p>
+          <a href="http://127.0.0.1:5501/backend/public/index.html" class="btn">Create your own Story</a>
+        </div>
+        
+    </section>
+
+        <!-- Wrapper for all the box containers -->
+    </section>
+    <!--new product section-->
+    <section class="new-product">
+        <div class="centre-text">
+            <h2 style="font-weight:500px, font-size:200px">
+                Ongoing Stories
+            </h2>
+        </div>
+
+
+         <h1>ADVENTURE</h1> 
+        <div class="new-content">
+           
+          <div class="row">
+            {{!-- <img src="story-main/adv1.jpeg"> --}}
+            <img src="https://i.pinimg.com/564x/99/4c/d9/994cd9ba994d16101668b567550c6abc.jpg" alt="">
+            <h4>PINK,BEIGE AND RED FLOWER BOUQUET</h4>
+            <h5>$18.00</h5>
+            <div class="top">
+             <p>hot</p>
+            </div>
+            <div class="bbtn" style="color:#f0f0f0 ;">
+              <a href="http://127.0.0.1:5501/tempelates/adventure1.html">Adventure Time</a>
+            </div>
+          </div> 
+          <div class="row">
+           {{!-- <img src="/story-main/adv2.jpeg"> --}}
+           <img src="https://i.pinimg.com/564x/90/25/94/9025947d400663a77a7a076d5a563fd8.jpg" alt="">
+           <h4>PINK,BEIGE AND RED FLOWER BOUQUET</h4>
+           <h5>$18.00</h5>
+           <div class="top">
+            <p>hot</p>
+           </div>
+           <div class="bbtn" style="color:#f0f0f0;">
+             <a href="http://127.0.0.1:5501/tempelates/adventure2.html">The Forest Adventure</a>
+           </div>
+         </div> 
+         <div class="row">
+           {{!-- <img src="/story-main/adv3.jpeg"> --}}
+           <img src="https://i.pinimg.com/564x/dc/85/3c/dc853cbe1b4680a2588902f016f190a1.jpg" alt="">
+           <h4>PINK,BEIGE AND RED FLOWER BOUQUET</h4>
+           <h5>$18.00</h5>
+           <div class="top">
+            <p>hot</p>
+           </div>
+           <div class="bbtn" style="color: #f0f0f0;">
+             <a href="http://127.0.0.1:5501/tempelates/adventure3.html">The house on Hoarder Hill</a>
+           </div>
+         </div> 
+
+
+
+         <div style="text-align: center; margin-top:20px">
+            <h1>FAIRY TALE</h1>
+         </div>
+         {{!-- <h1>FAIRY TALE</h1> --}}
+         <div class="row">
+           {{!-- <img src="/story-main/fairy1.jpeg"> --}}
+           <img src="https://i.pinimg.com/564x/08/42/42/084242276a4e6faa91f45d6af6ce42af.jpg" alt="">
+           <h4>PINK,BEIGE AND RED FLOWER BOUQUET</h4>
+           <h5>$18.00</h5>
+           <div class="top">
+            <p>hot</p>
+           </div>
+           <div class="bbtn" style="color:#f0f0f0;">
+             <a href="http://127.0.0.1:5501/tempelates/fairytale1.html">Snow white And the seven Dwarfs</a>
+           </div>
+         </div> 
+         <div class="row">
+           {{!-- <img src="/story-main/fairy2.jpeg"> --}}
+           <img src="https://i.pinimg.com/564x/7d/da/eb/7ddaeb1cdd691fd6f2a5de16667f29a6.jpg" alt="">
+           <h4>PINK,BEIGE AND RED FLOWER BOUQUET</h4>
+           <h5>$18.00</h5>
+           <div class="top">
+            <p>hot</p>
+           </div>
+           <div class="bbtn" style="color: #f0f0f0;">
+             <a href="http://127.0.0.1:5501/tempelates/fairytale2.html">Beauty And The Beast</a>
+           </div>
+         </div> 
+         <div class="row">
+           {{!-- <img src="/story-main/fairy3.jpeg"> --}}
+           <img src="https://i.pinimg.com/736x/1b/87/ef/1b87ef903e46941ce8bfad800823c984.jpg" alt="">
+           <h4>PINK,BEIGE AND RED FLOWER BOUQUET</h4>
+           <h5>$18.00</h5>
+           <div class="top">
+            <p>hot</p>
+           </div>
+           <div class="bbtn" style="color: #f0f0f0;">
+             <a href="http://127.0.0.1:5501/tempelates/fairytale3.html">Tangled</a>
+           </div>
+          </div>
+
+
+
+          <H1>FANTASY</H1>
+           <div class="row">
+             {{!-- <img src="/story-main/fan1.jpeg"> --}}
+             <img src="https://i.pinimg.com/564x/11/07/3d/11073da1247b1a03c2a1c88e3aa716e4.jpg" alt="">
+             <h4>PINK,BEIGE AND RED FLOWER BOUQUET</h4>
+             <h5>$18.00</h5>
+             <div class="top">
+              <p>hot</p>
+             </div>
+             <div class="bbtn" style="color: #f0f0f0;">
+               <a href="http://127.0.0.1:5501/tempelates/fantasy1.html">The Tale of Battling The Demond</a>
+             </div>
+           </div> 
+           <div class="row">
+            {{!-- <img src="/story-main/fan2.jpeg"> --}}
+            <img src="https://i.pinimg.com/564x/a3/8a/5e/a38a5e6b17d0e6c9da1d0f31408b2c35.jpg" alt="">
+            <h4>PINK,BEIGE AND RED FLOWER BOUQUET</h4>
+            <h5>$18.00</h5>
+            <div class="top">
+             <p>hot</p>
+            </div>
+            <div class="bbtn" style="color: #f0f0f0;">
+              <a href="http://127.0.0.1:5501/tempelates/fantasy2.html">The Water And The Wild</a>
+            </div>
+          </div> 
+          <div class="row">
+            {{!-- <img src="/story-main/fan3.jpeg"> --}}
+            <img src="https://i.pinimg.com/564x/5c/1b/e6/5c1be618f5231868007712e278b6f8ad.jpg" alt="">
+            <h4>PINK,BEIGE AND RED FLOWER BOUQUET</h4>
+            <h5>$18.00</h5>
+            <div class="top">
+             <p>hot</p>
+            </div>
+            <div class="bbtn" style="color: #f0f0f0;">
+              <a href="http://127.0.0.1:5501/tempelates/fantasy3.html">Ferngully</a>
+            </div>
+          </div> 
+
+
+
+
+          <h1>HORROR</h1>
+          <div class="row">
+            {{!-- <img src="/story-main/hor1.jpeg"> --}}
+            <img src="https://i.pinimg.com/564x/83/b0/89/83b0899677a9e3c8bbff1944dac3d5c9.jpg" alt="">
+            <h4>PINK,BEIGE AND RED FLOWER BOUQUET</h4>
+            <h5>$18.00</h5>
+            <div class="top">
+             <p>hot</p>
+            </div>
+            <div class="bbtn" style="color:#f0f0f0;">
+              <a href="http://127.0.0.1:5501/tempelates/horror1.html">Jumbies</a>
+            </div>
+          </div> 
+          <div class="row">
+            {{!-- <img src="/story-main/hor2.jpeg"> --}}
+            <img src="https://i.pinimg.com/564x/1b/ce/c3/1bcec3df4f5990d764798f03083cfe04.jpg" alt="">
+            <h4>PINK,BEIGE AND RED FLOWER BOUQUET</h4>
+            <h5>$18.00</h5>
+            <div class="top">
+             <p>hot</p>
+            </div>
+            <div class="bbtn" style="color: #f0f0f0;">
+              <a href="http://127.0.0.1:5501/tempelates/horror2.html">The Ten Riddles of Earth A QuickSmith</a>
+            </div>
+          </div> 
+          <div class="row">
+            {{!-- <img src="/story-main/hor3.jpeg"> --}}
+            <img src="https://i.pinimg.com/564x/87/7a/5a/877a5a735c24f7356912341f829c0c41.jpg" alt="">
+            <h4>PINK,BEIGE AND RED FLOWER BOUQUET</h4>
+            <h5>$18.00</h5>
+            <div class="top">
+             <p>hot</p>
+            </div>
+            <div class="bbtn" style="color: #f0f0f0;">
+              <a href="http://127.0.0.1:5501/tempelates/horror3.html">Fingh House</a>
+            </div>
+          </div> 
+
+
+
+          <h1>MYSTERY</h1>
+          <div class="row">
+            {{!-- <img src="/story-main/mystery1.jpeg"> --}}
+            <img src="https://i.pinimg.com/736x/67/c9/66/67c966016bc45e50308d1ab6fea49a19.jpg" alt="">
+            <h4>PINK,BEIGE AND RED FLOWER BOUQUET</h4>
+            <h5>$18.00</h5>
+            <div class="top">
+             <p>hot</p>
+            </div>
+            <div class="bbtn" style="color: #f0f0f0;">
+              <a href="http://127.0.0.1:5501/tempelates/mystery1.html">Tree House</a>
+            </div>
+          </div> 
+          <div class="row">
+            {{!-- <img src="/story-main/mystery3.jpeg"> --}}
+            <img src="https://i.pinimg.com/564x/65/f6/b3/65f6b398d85d1fed0c2f127c84505991.jpg" alt="">
+            <h4>PINK,BEIGE AND RED FLOWER BOUQUET</h4>
+            <h5>$18.00</h5>
+            <div class="top">
+             <p>hot</p>
+            </div>
+            <div class="bbtn" style="color: #f0f0f0;">
+              <a href="http://127.0.0.1:5501/tempelates/mystery2.html">Detective And Mystery</a>
+            </div>
+          </div> 
+          <div class="row">
+            {{!-- <img src="/story-main/mystery2.jpeg"> --}}
+            <img src="https://i.pinimg.com/564x/8e/87/dc/8e87dc7d954e34aab6c02c137d0d1878.jpg" alt="">
+            <h4>PINK,BEIGE AND RED FLOWER BOUQUET</h4>
+            <h5>$18.00</h5>
+            <div class="top">
+             <p>hot</p>
+            </div>
+            <div class="bbtn" style="color: #f0f0f0;">
+              <a href="http://127.0.0.1:5501/tempelates/mystery3.html">Detective Jack</a>
+            </div>
+          </div>
+
+
+
+          <h1>COMEDY</h1>
+          <div class="row">
+            {{!-- <img src="/story-main/co3.jpeg"> --}}
+            <img src="https://i.pinimg.com/564x/9a/ce/aa/9aceaa182ae0407740d1583161c7a8d9.jpg" alt="">
+            <h4>PINK,BEIGE AND RED FLOWER BOUQUET</h4>
+            <h5>$18.00</h5>
+            <div class="top">
+             <p>hot</p>
+            </div>
+            <div class="bbtn" style="color: #f0f0f0;">
+              <a href="http://127.0.0.1:5501/tempelates/comedy1.html">Jeremy Strong</a>
+            </div>
+          </div> 
+          <div class="row">
+            {{!-- <img src="/story-main/co1.jpeg"> --}}
+            <img src="https://i.pinimg.com/564x/d1/32/3c/d1323cd207bd738b7061cee6489d9f35.jpg" alt="">
+            <h4>PINK,BEIGE AND RED FLOWER BOUQUET</h4>
+            <h5>$18.00</h5>
+            <div class="top">
+             <p>hot</p>
+            </div>
+            <div class="bbtn" style="color: #f0f0f0;">
+              <a href="http://127.0.0.1:5501/tempelates/comedy2.html">Agent Moose</a>
+            </div>
+          </div> 
+          <div class="row">
+            {{!-- <img src="/story-main/co2.jpeg"> --}}
+            <img src="https://i.pinimg.com/564x/6f/83/98/6f8398673ee463ecbcba469e26c053c6.jpg" alt="">
+            <h4>PINK,BEIGE AND RED FLOWER BOUQUET</h4>
+            <h5>$18.00</h5>
+            <div class="top">
+             <p>hot</p>
+            </div>
+            <div class="bbtn" style="color: #f0f0f0 ">
+              <a href="http://127.0.0.1:5501/tempelates/comedy3.html">The Flintstones</a>
+            </div>
+          </div> 
+
+
+
+          <H1>THRILLER</H1>
+          <div class="row">
+            {{!-- <img src="/story-main/thi3.jpeg"> --}}
+            <img src="https://i.pinimg.com/564x/1d/0a/51/1d0a51fe2ae66a7e8bcd73909754a54b.jpg" alt="">
+            <h4>PINK,BEIGE AND RED FLOWER BOUQUET</h4>
+            <h5>$18.00</h5>
+            <div class="top">
+             <p>hot</p>
+            </div>
+            <div class="bbtn" style="color: #f0f0f0;">
+              <a href="http://127.0.0.1:5501/tempelates/thriller2.html">Jumanji</a>
+            </div>
+          </div> 
+          <div class="row">
+            {{!-- <img src="/story-main/thi1.jpeg"> --}}
+            <img src="https://i.pinimg.com/564x/3d/6a/8d/3d6a8d0758393976394e12d852d65549.jpg" alt="">
+            <h4>PINK,BEIGE AND RED FLOWER BOUQUET</h4>
+            <h5>$18.00</h5>
+            <div class="top">
+             <p>hot</p>
+            </div>
+            <div class="bbtn" style="color: #f0f0f0;">
+              <a href="http://127.0.0.1:5501/tempelates/thriller1.html">Nightmares</a>
+            </div>
+          </div> 
+          <div class="row">
+            {{!-- <img src="/story-main/thi2.jpeg"> --}}
+            <img src="https://i.pinimg.com/564x/41/81/bc/4181bc665c71aaf6896179e866da1e7c.jpg" alt="">
+            <h4>PINK,BEIGE AND RED FLOWER BOUQUET</h4>
+            <h5>$18.00</h5>
+            <div class="top">
+             <p>hot</p>
+            </div>
+            <div class="bbtn" style="color: #f0f0f0;">
+              <a href="http://127.0.0.1:5501/tempelates/thriller3.html">The Benitching of Aveline Jones</a>
+            </div>
+          </div> 
+
+
+
+          <H1>SCIENCE FICTION</H1>
+          <div class="row">
+            {{!-- <img src="/story-main/sc3.jpeg"> --}}
+            <img src="https://i.pinimg.com/564x/69/d8/e1/69d8e1ab75b2397b07056448d544760f.jpg" alt="">
+            <h4>PINK,BEIGE AND RED FLOWER BOUQUET</h4>
+            <h5>$18.00</h5>
+            <div class="top">
+             <p>hot</p>
+            </div>
+            <div class="bbtn" style="color: #f0f0f0;">
+              <a href="http://127.0.0.1:5501/tempelates/sci-fi1.html">Floating Hotel</a>
+            </div>
+          </div> 
+          <div class="row">
+            {{!-- <img src="/story-main/sc1.jpeg"> --}}
+            <img src="https://i.pinimg.com/564x/6e/d4/b8/6ed4b8d5e5b0e303abedb33ac84c9bce.jpg" alt="">
+            <h4>PINK,BEIGE AND RED FLOWER BOUQUET</h4>
+            <h5>$18.00</h5>
+            <div class="top">
+             <p>hot</p>
+            </div>
+            <div class="bbtn" style="color: #f0f0f0;">
+              <a href='http://127.0.0.1:5501/tempelates/sci-fi2.html'>Space Case</a>
+            </div>
+          </div> 
+          <div class="row">
+            {{!-- <img src="/story-main/sc2.jpeg"> --}}
+            <img src="https://i.pinimg.com/564x/6b/5f/f9/6b5ff90d2b50c81272084ad99eaf340a.jpg" alt="">
+            <h4>PINK,BEIGE AND RED FLOWER BOUQUET</h4>
+            <h5>$18.00</h5>
+            <div class="top">
+             <p>hot</p>
+            </div>
+            <div class="bbtn" style="color: #f0f0f0;">
+              <a href="http://127.0.0.1:5501/tempelates/sci-fi3.html">Space Cat</a>
+            </div>
+          </div> 
+
+          <H1>BIOGRAPHY</H1>
+          <div class="row">
+            {{!-- <img src="/story-main/bio3.jpeg"> --}}
+            <img src="https://i.pinimg.com/564x/09/24/5d/09245da7a0eb24d2a6b6f587d9496caf.jpg" alt="">
+            <h4>PINK,BEIGE AND RED FLOWER BOUQUET</h4>
+            <h5>$18.00</h5>
+            <div class="top">
+             <p>hot</p>
+            </div>
+            <div class="bbtn" style="color: #f0f0f0;">
+              <a href="http://127.0.0.1:5501/tempelates/bio2.html">The Story of Harriet Tubman</a>
+            </div>
+          </div> 
+          <div class="row">
+            {{!-- <img src="/story-main/bio1.jpeg"> --}}
+            <img src="https://i.pinimg.com/564x/01/83/b0/0183b00a44228fa0e011bb365a26840a.jpg" alt="">
+            <h4>PINK,BEIGE AND RED FLOWER BOUQUET</h4>
+            <h5>$18.00</h5>
+            <div class="top">
+             <p>hot</p>
+            </div>
+            <div class="bbtn" style="color: #f0f0f0;">
+              <a href="http://127.0.0.1:5501/tempelates/bio3.html">Albert Einstein</a>
+            </div>
+          </div> 
+          <div class="row">
+            {{!-- <img src="/story-main/bio2.jpeg"> --}}
+            <img src="https://i.pinimg.com/564x/38/f7/12/38f712e2059474e0508b405af2d1646d.jpg" alt="">
+            <h4>PINK,BEIGE AND RED FLOWER BOUQUET</h4>
+            <h5>$18.00</h5>
+            <div class="top">
+             <p>hot</p>
+            </div>
+            <div class="bbtn" style="color: #f0f0f0;">
+              <a href="http://127.0.0.1:5501/tempelates/bio1.html">Jim Henson</a>
+            </div>
+          </div> 
+
+          
+        </div>
+    </section>
+     
+     
+  <!----blog section-->
+  <section class="blog">
+
+    <div class="centre-text">
+       <h2>Latest stories</h2>
+    </div>
+
+    <div class="blog-content">
+       <div class="main-box">
+         <div class="box-img">
+            {{!-- <img class="blog-img2" src="/story-main/content1.jpg"> --}}
+            <img src="https://i.pinimg.com/736x/e4/9c/c1/e49cc17bd5cb982a043737d9587f8bc2.jpg" style="width: 500px;height: 300px;">
+         </div>
+         <div class="in-bxx">
+           <div class="in-text">
+              <p class="para2">Dec 02,2024</p>
+           </div>
+            
+         </div>
+         <h3>Shinchan: The Secret Treasure of the Buri Buri Kingdom</h3>
+       </div>
+
+       <div class="main-box">
+        <div class="box-img">
+           {{!-- <img class="blog-img2" src="/story-main/content2.jpg"> --}}
+           <img src="https://i.pinimg.com/564x/4d/58/db/4d58dbe5e85adcfe0f2b32d8ee7ddf99.jpg" style="width: 500px;height: 300px;">
+        </div>
+        <div class="in-bxx">
+          <div class="in-text">
+             <p class="para2">Dec 02,2024</p>
+          </div>
+           
+        </div>
+        <h3>Animal Rescue Friends</h3>
+      </div>
+
+      <div class="main-box">
+        <div class="box-img">
+           {{!-- <img class="blog-img2" src="/story-main/content3.jpg"> --}}
+           <img src="https://i.pinimg.com/736x/77/f2/3b/77f23bf96bb8acca83089bcbab9f4099.jpg" style="width: 500px;height: 300px">
+        </div>
+        <div class="in-bxx">
+          <div class="in-text">
+             <p class="para2">Dec 02,2024</p>
+          </div>
+           
+        </div>
+        <h3>The Okee Bokee Brothers Bramble Town</h3>
+      </div>
+
+      <div class="main-box">
+        <div class="box-img">
+           {{!-- <img class="blog-img2" src="/story-main/content4.jpg"> --}}
+           <img src="https://i.pinimg.com/736x/6f/09/86/6f098658784c542da664f9b2b34d1efa.jpg" style="width: 500px;height: 300px">
+        </div>
+        <div class="in-bxx">
+          <div class="in-text">
+             <p class="para2">Dec 02,2024</p>
+          </div>
+          
+        </div>
+        <h3>Beyond The Beanstalk</h3>
+      </div>
+
+    </div>
+  </section>
+
+  <!--contact section-->
+  <section class="contact">
+
+    <div class="contact-box">
+      <h4>MY ACCOUNT</h4>
+      <li><a href="#">My Account</a></li>
+      <li><a href="#">Checkout</a></li>
+      <li><a href="#">Contact Us</a></li>
+      <li><a href="#">Shopping Cart</a></li>
+      <li><a href="#">Wishlist</a></li>
+    </div>
+    <div class="contact-box">
+      <h4>QUICK LINKS</h4>
+      <li><a href="#">Store Location</a></li>
+      <li><a href="#">Order Tracking</a></li>
+      <li><a href="#">Size Guide</a></li>
+      <li><a href="#">My Account</a></li>
+      <li><a href="#">FAQs</a></li>
+    </div>
+    <div class="contact-box">
+      <h4>INFORMATION</h4>
+      <li><a href="#">Privacy Page</a></li>
+      <li><a href="#">About us</a></li>
+      <li><a href="#">Careers</a></li>
+      <li><a href="#">Delivery Information</a></li>
+      <li><a href="#">Terms & Conditions</a></li>
+    </div>
+    <div class="contact-box">
+      <h4>CUSTOMER SERVICE</h4>
+      <li><a href="#">Shopping Policy</a></li>
+      <li><a href="#">Help & Contact Us</a></li>
+      <li><a href="#">Returns & Refunds</a></li>
+      <li><a href="#">Online Stores</a></li>
+      <li><a href="#">Terms and Conditions</a></li>
+    </div>
+    <div class="contact-box">
+      <h4>STORYTOPIA </h4>
+      <h5>Connect with us</h5>
+      <div class="social">
+        <a href="#"><i class='bx bxl-facebook' style="color: #D3D3D3;"></i></a>
+        <a href="#"><i class='bx bxl-instagram-alt' style="color: #D3D3D3;"></i></a>
+        <a href="#"><i class='bx bxl-twitter' style="color: #D3D3D3;"></i></a>
+      </div>
+      
+    </div>
+  </section>
+  <!--scroll-->
+  <a href="#" class="scroll-top"><i class='bx bx-chevrons-up'></i></a>
+  <div class="end-text">
+    <p>@ late 2022 Tahmid Ahmed. All Rights Reserved.</p>
+
+  </div>
+    
+    
+</body>
+</html>

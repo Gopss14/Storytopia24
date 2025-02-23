@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Your Story</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', sans-serif;
+            background-color: #e0f7fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #00796b;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #storyForm {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 10px;
+            color: #00796b;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 2px solid #00796b;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 16px;
+            background-color: #f0f4c3;
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        button {
+            width: 100%;
+            background-color: #004d40;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #00796b;
+        }
+
+        @media (max-width: 600px) {
+            #storyForm {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 24px;
+            }
+            button {
+                font-size: 16px;
+            }
+        }
+        h1 {
+            position: absolute;
+            top: 20px; /* Distance from the top */
+            left: 50%;
+            transform: translateX(-50%);
+            color: #00796b;
+            font-size: 36px;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Create Your own Story</h1>
+    <form id="storyForm">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required>
+
+        <label for="genre">Genre:</label>
+        <input type="text" id="genre" name="genre" required>
+
+        <label for="content">Content:</label>
+        <textarea id="content" name="content" rows="6" required></textarea>
+
+        <label for="createdBy">Created By:</label>
+        <input type="text" id="createdBy" name="createdBy" required>
+
+        <button type="submit">Submit Story</button>
+    </form>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Book</title>
+    <style>
+        body {
+            font-family: 'Garamond', serif; /* Classic serif font for a vintage feel */
+            margin: 0;
+            padding: 0;
+            background: url('images/soft-vintage-background.jpg') no-repeat center center fixed; /* New background image */
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;           
+            background: url('https://i.pinimg.com/564x/1e/80/a3/1e80a3c3d3f6507d38563c09307e8f54.jpg') no-repeat;
+            background-size: cover;  /* Ensures the image covers the whole screen */
+            background-position: center;  /* Centers the image */
+            background-attachment: fixed;  /* Ensures the background stays in place when scrolling */
+        }
+
+        /* Book container */
+        .book-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(255, 242, 242, 0.29); /* Transparent effect on the book background */
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.356);
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        /* Book structure */
+        .book {
+            position: relative;
+            width: 70vw;
+            height: 80vh;
+            perspective: 2000px;
+        }
+
+        /* Pages */
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('images/parchment-texture-soft.jpg'); /* Default parchment texture */
+            background-size: cover;
+            padding: 40px;
+            box-sizing: border-box;
+            border: 2px solid #d3b185; /* Softer gold border */
+            backface-visibility: hidden;
+            transform-origin: left;
+            transition: transform 1s ease-in-out;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.723);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: rgba(255, 255, 255, 0.942);
+            border-radius: 30px; /* Curl effect on the edges */
+            
+        }
+
+
+        /* Back of the page */
+        .page-back {
+            background: url('images/parchment-texture-soft-back.jpg'); /* Lighter back parchment texture */
+            background-size: cover;
+            transform: rotateY(-180deg);
+        }
+
+        /* Flipping animation */
+        .page.flipped {
+            transform: rotateY(-180deg);
+        } 
+        /* Text and image container inside the page */
+        .page-content {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .page-content p {
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0); /* Light background for the box */
+            max-width: 400px; /* Limits the width of the box */
+        }
+        
+
+        .page h2 {
+            font-size: 2.6em;
+            margin-bottom: 20px;
+            color: #5a4b3b; /* Warm brown color for the header */
+            text-align: center;
+            text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.748);
+            font-family: 'Cinzel Decorative', serif;
+        }
+
+        .page p {
+            line-height: 1.8;
+            font-size: 1.4em;
+            color: #5b4636; /* Warmer brown for text */
+            text-align: justify;
+            max-width: 45%; /* Limit width of text */
+            font-family: 'Garamond', serif;
+        }
+
+        .page img {
+            max-width: 80%; /* Image takes up 50% of the width */
+            height: 70%; /* Maintain aspect ratio */
+            border-radius: 10px; /* Rounded corners for images */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            object-fit: cover;
+            position: absolute; /* Positioning to allow corner alignment */
+            bottom: 43px;
+            right: 98px; /* Adjust as needed */
+            margin: 0; /* Remove margin to ensure positioning */
+        }
+
+        /* Navigation buttons */
+        .navigation-buttons {
+            position: absolute;
+            bottom: 5px; /* Lowered the buttons a bit */
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 30px;
+        }
+
+        button {
+            font-size: 1.5em;
+            padding: 12px 25px;
+            background: linear-gradient(90deg, #472b04, #472b04); /* Calming blue gradient */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            font-family: 'Cinzel Decorative', serif;
+        }
+
+        button:hover {
+            background: linear-gradient(90deg, #472b04ea, #472b04e9); /* Lighter blue gradient */
+            transform: scale(1.05);
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body>
+    <div class="book-container">
+        <div class="book">
+            <!-- Front of Page 1 -->
+            <div class="page" id="page1">
+                <h2>Chapter 1: The Move</h2>
+                <div class="page-content">
+                    <p id="text1">
+"Fingh House" tells the story of Sam, a quiet teenager who moves with his father to a coastal village after his mother’s death. They settle into the ominous Fingh House, known for its dark history and eerie occurrences. As Sam explores, he begins to hear footsteps, see shadows, and feel a haunting presence. Despite his father's skepticism, Sam senses something sinister lurking within the mansion's walls.
+                    </p>
+                    <!-- <img src="./adv1.jpeg" alt="Chapter 1 Image"> -->
+                     <img src="https://i.pinimg.com/564x/5d/d7/0c/5dd70ce91f8afb6acd09c650e61ec9e6.jpg" alt="">
+                </div>
+            </div>
+
+            <!-- Back of Page 1 -->
+            <div class="page page-back" id="page1-back">
+                <p>
+                    It was a place where stories were born, and every being had a tale to tell. The first tale we share is about a humble village, nestled between the mountains.
+                </p>
+            </div>
+
+            <!-- Front of Page 2 -->
+            <div class="page" id="page2">
+                <h2>Chapter 2: Uncovering the Truth</h2>
+                <div class="page-content">
+                    <p id="text2">
+                        Determined to understand Fingh House, Sam finds an old journal belonging to a boy named Tommy, who disappeared a century ago. The journal reveals that the house feeds on fear and has a malevolent spirit tied to its history. As strange occurrences escalate, Sam befriends Emma, who helps him learn about Lyle Fingh, the original owner who made a dark pact for eternal life, trapping his soul within the house.
+                    </p>
+                    <!-- <img src="./adv2.jpeg" alt="Chapter 2 Image"> -->
+                     <img src="https://i.pinimg.com/564x/27/f5/98/27f5988597d8bd929eaebd809836857c.jpg" alt="">
+                </div>
+            </div>
+
+            <!-- Back of Page 2 -->
+            <div class="page page-back" id="page2-back">
+                <p>
+                    The journey led Arin through enchanted forests, over rolling hills, and across wide rivers. Yet, the greatest challenge was still ahead.
+                </p>
+            </div>
+            <!-- Front of Page 3 -->
+            <div class="page" id="page1">
+                <h2>Chapter 3: Breaking the Curse</h2>
+                <div class="page-content">
+                    <p id="text3">
+                        
+                        Sam and Emma discover that to break the curse, they must find a relic containing Lyle’s soul. Facing the house's wrath, they uncover a hidden chamber in the basement. As they retrieve the relic, Lyle’s ghost confronts them. In a desperate act, Sam shatters the box, releasing a surge of energy that frees Lyle's spirit. With the curse lifted, Sam and his father leave Fingh House behind, embracing hope for the future.
+                    </p>
+                    <!-- <img src="./adv1.jpeg" alt="Chapter 1 Image"> -->
+                     <img src="https://i.pinimg.com/564x/c5/86/a4/c586a48eb8c2565b7e7cf5089e93d062.jpg" alt="">
+                </div>
+            </div>
+
+            <!-- Back of Page 3 -->
+            <div class="page page-back" id="page1-back">
+                <p>
+                    It was a place where stories were born, and every being had a tale to tell. The first tale we share is about a humble village, nestled between the mountains.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="navigation-buttons">
+        <button id="prevBtn">Previous</button>
+        <button id="nextBtn">Next</button>
+    </div>
+    <div id="google_element"></div> <!-- Google Translate Widget will render here -->
+
+
+    <!-- Google Translate API Script -->
+    <script src="http://translate.google.com/translate_a/element.js?cb=loadGoogleTranslate"></script>
+    <script>
+        // Load Google Translate
+        function loadGoogleTranslate() {
+            new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_element');
+        }
+    
+        // Initialize page array and set currentPage to 0
+        const pages = document.querySelectorAll('.page');
+        let currentPage = 0;
+        let isSpeaking = false; // Track whether audio is currently playing
+        let utterance; // Store the utterance object
+    
+        // Function to update page visibility
+        function updatePages() {
+            pages.forEach((page, index) => {
+                if (index === currentPage || index === currentPage + 1) {
+                    page.style.display = 'block';
+                } else {
+                    page.style.display = 'none';
+                }
+            });
+        }
+    
+        // Initial display
+        updatePages();
+    
+        // Next button event
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            if (currentPage < pages.length - 1) {
+                pages[currentPage].classList.add('flipped');
+                currentPage += 1; // Move to the next page
+                updatePages();
+            }
+        });
+    
+        // Previous button event
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            if (currentPage > 0) {
+                currentPage -= 1;
+                pages[currentPage].classList.remove('flipped');
+                updatePages();
+            }
+        });
+    
+        // Text-to-speech functionality with pause and resume on click
+        document.addEventListener("click", () => {
+            let textToSpeak;
+    
+            // Get text from the current page
+            if (currentPage === 0) {
+                textToSpeak = document.getElementById("text1").innerText;
+            } else if (currentPage === 1) {
+                textToSpeak = document.getElementById("text2").innerText;
+            } else if (currentPage === 2) {
+                textToSpeak = document.getElementById("text3").innerText;
+            }
+    
+            // If speech is paused, resume it
+            if (speechSynthesis.paused) {
+                speechSynthesis.resume();
+            } 
+            // If speaking, pause it
+            else if (isSpeaking) {
+                speechSynthesis.pause();
+            } 
+            // If not speaking, start the speech
+            else if (textToSpeak) {
+                utterance = new SpeechSynthesisUtterance(textToSpeak);
+                utterance.onstart = () => {
+                    isSpeaking = true;
+                };
+                utterance.onend = () => {
+                    isSpeaking = false;
+                };
+                speechSynthesis.speak(utterance);
+            }
+        });
+    
+        // Share functionality
+        const shareBtn = document.getElementById('shareBtn');
+    
+        shareBtn.addEventListener('click', () => {
+            // Check for Web Share API support
+            if (navigator.share) {
+                navigator.share({
+                    text: 'Please read this great article: ',
+                    url: 'https://www.google.com/'
+                }).then(() => {
+                    console.log('Thanks for sharing!');
+                }).catch((err) => console.error(err));
+            } else {
+                // Fallback
+                alert("The current browser does not support the share function. Please, manually share the link.");
+            }
+        });
+    </script>
+    </body>
+    </html>

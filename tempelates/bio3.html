@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Book</title>
+    <style>
+        body {
+            font-family: 'Garamond', serif; /* Classic serif font for a vintage feel */
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: url('https://i.pinimg.com/474x/bd/1c/c8/bd1cc83c2bca4fefc18805fc7257edbb.jpg') no-repeat center center fixed; /* New background image */
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Book container */
+        .book-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.8); /* Transparent effect on the book background */
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        /* Book structure */
+        .book {
+            position: relative;
+            width: 70vw;
+            height: 80vh;
+            perspective: 2000px;
+        }
+
+        /* Pages */
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('images/parchment-texture-soft.jpg'); /* Default parchment texture */
+            background-size: cover;
+            padding: 40px;
+            box-sizing: border-box;
+            border: 2px solid #d3b185; /* Softer gold border */
+            backface-visibility: hidden;
+            transform-origin: left;
+            transition: transform 1s ease-in-out;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+      
+        /* Back of the page */
+        .page-back {
+            background: url('images/parchment-texture-soft-back.jpg'); /* Lighter back parchment texture */
+            background-size: cover;
+            transform: rotateY(-180deg);
+        }
+
+        /* Flipping animation */
+        .page.flipped {
+            transform: rotateY(-180deg);
+        }
+
+        /* Old-timey scroll effect */
+        .page:before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            bottom: -10px;
+            left: -20px;
+            right: -20px;
+            background: radial-gradient(ellipse at top, rgba(0,0,0,0.1), transparent), radial-gradient(ellipse at bottom, rgba(0,0,0,0.1), transparent);
+            border-radius: 30px; /* Curl effect on the edges */
+            pointer-events: none;
+            z-index: -1;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        /* Text and image container inside the page */
+        .page-content {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .page h2 {
+            font-size: 2.6em;
+            margin-bottom: 20px;
+            color: #5a4b3b; /* Warm brown color for the header */
+            text-align: center;
+            text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.6);
+            font-family: 'Cinzel Decorative', serif;
+        }
+
+        .page p {
+            line-height: 1.8;
+            font-size: 0.9em;
+            color: #5b4636; /* Warmer brown for text */
+            text-align: justify;
+            max-width: 45%; /* Limit width of text */
+            font-family: 'Garamond', serif;
+        }
+
+        .page img {
+            max-width: 80%; /* Image takes up 50% of the width */
+            height: 70%; /* Maintain aspect ratio */
+            border-radius: 10px; /* Rounded corners for images */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            object-fit: cover;
+            position: absolute; /* Positioning to allow corner alignment */
+            bottom: 43px;
+            right: 98px; /* Adjust as needed */
+            margin: 0; /* Remove margin to ensure positioning */
+        }
+
+        /* Navigation buttons */
+        .navigation-buttons {
+           position: fixed; /* Use fixed to keep the buttons at the bottom even if the page scrolls */
+           bottom: -70px; /* Distance from the bottom of the page */
+           left: 50%; /* Move the buttons to the horizontal center of the page */
+           transform: translateX(-50%); /* Adjust to exactly center by translating left by 50% of the container's width */
+           display: flex; /* Allows space between buttons */
+           gap: 30px; /* Space between buttons */
+           z-index: 1000; /* Ensure the buttons are on top of other content */
+}
+
+
+        button {
+            font-size: 1.5em;
+            padding: 12px 25px;
+            background: linear-gradient(90deg, #5087c6, #6e9fde); /* Calming blue gradient */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            font-family: 'Cinzel Decorative', serif;
+        }
+
+        button:hover {
+            background: linear-gradient(90deg, #6e9fde, #a0c9f0); /* Lighter blue gradient */
+            transform: scale(1.05);
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+/* Stylish share button styles */
+.share-button {
+    position: fixed;
+    bottom: 2px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, #6e7fdb, #9f82ce);
+    padding: 10px 20px;
+    border-radius: 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.share-icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff30;
+    border-radius: 50%;
+}
+
+.share-button span {
+    font-size: 1.2em;
+    color: #fff;
+    font-weight: 500;
+}
+
+.share-button:hover {
+    transform: scale(1.1);
+    background: linear-gradient(135deg, #84a9ff, #b69ce5);
+}
+    </style>
+</head>
+<body>
+    <div class="book-container">
+        <div class="book">
+            <!-- Front of Page 1 -->
+            <div class="page" id="page1">
+                <h2>Chapter 1: The Beginning</h2>
+                <div class="page-content">
+                    <p id="text1">
+                        lbert Einstein died on April 18, 1955, but his legacy endures. His theories revolutionized our understanding of the cosmos, 
+and his famous equation, \(E = mc^2\), remains one of the most well-known scientific formulas in history. Einstein’s contributions to science not only
+ changed the course of physics but also altered humanity’s view of the universe and our place within it. His brilliance, curiosity, and commitment to both science and
+ humanity continue to inspire generations of thinkers, dreamers, and problem-solvers.
+                        
+                    </p>
+                    <!-- <img src="./adv1.jpeg" alt="Chapter 1 Image"> -->
+                     <img src="https://i.pinimg.com/474x/bf/27/7f/bf277f4044fbdf540521640eb3b34d9f.jpg" alt="">
+                </div>
+            </div>
+
+            <!-- Back of Page 1 -->
+            <div class="page page-back" id="page1-back">
+                <p>
+                  “Princess Bubblegum”, although often portrayed as kind and diplomatic, has her own complicated story. As the ruler of the Candy Kingdom, she is a brilliant scientist, but her pragmatic and sometimes morally questionable decisions reflect her desire to maintain order and protect her people. Finn initially has a crush on her, but as he matures, his feelings evolve, especially after meeting Flame Princess, another love interest with a fiery personality.
+                 
+                  Marceline the Vampire Queen, a thousand-year-old vampire with a rockstar persona, is one of Finn and Jake’s closest friends. She has a deep emotional history, especially with the Ice King, who, before losing his sanity, was like a father figure to her. Marceline’s past is slowly revealed throughout the series, showing her as a deeply complex character struggling with abandonment, her immortal life, and her relationships.   
+                </p>
+            </div>
+
+            <!-- Front of Page 2 -->
+            <div class="page" id="page2">
+                <h2>Chapter 2: The Journey</h2>
+                <div class="page-content">
+                    <p id="text2">
+                        instein also made significant contributions to quantum theory, particularly in explaining the photoelectric effect, for which he won the Nobel Prize in Physics in 1921. His work fundamentally changed the way we understand the universe, blending complex ideas of physics with philosophical insights about time, space, and existence.
+
+In addition to his scientific achievements, Einstein was known for his humanitarian efforts and advocacy for peace
+
+                 
+                      
+                    </p>
+                    <!-- <img src="./adv2.jpeg" alt="Chapter 2 Image"> -->
+                     <img src="https://i.pinimg.com/474x/da/b6/1b/dab61b46f446999775434bd0adf39f90.jpg" alt="">
+                </div>
+            </div>
+
+            <!-- Back of Page 2 -->
+            <div class="page page-back" id="page2-back">
+                <p>
+                  The series is filled with humor, quirky side characters, and surreal moments, but it also delves into deep and emotional storytelling. Themes of friendship, sacrifice, and existential reflection are woven into the narrative. Finn’s journey is marked by a gradual coming-of-age story, where he learns to deal with the complexities of life, not just through heroism, but through empathy and understanding.
+
+                  In the later seasons, the series explores more philosophical themes, including the nature of existence, life, and death. One of the central figures in these discussions is “BMO”, a sentient gaming console and robot who often contemplates life and what it means to have a purpose.
+                        </p>
+            </div>
+             <!-- Front of Page 3-->
+             <div class="page" id="page1">
+              <h2>Chapter 3: The Conclusion</h2>
+              <div class="page-content">
+                  <p id="text3">
+                    In the final years of his life, Albert Einstein continued to work on theoretical physics and pursue his scientific interests, even though his health was declining. He remained deeply involved in trying to unify the forces of nature, a goal known as the unified field theory, which sought to combine the forces of electromagnetism and gravity into one coherent framework. This was an extension of his earlier work on general relativity, but he never succeeded in fully developing the theory.
+
+                 </p>
+                  <!-- <img src="./adv1.jpeg" alt="Chapter 1 Image"> -->
+                   <img src="https://i.pinimg.com/474x/d0/e8/5e/d0e85ea5f4e1d97c8761d61da9bd6608.jpg" alt="">
+              </div>
+          </div>
+
+          <!-- Back of Page 3 -->
+          <div class="page page-back" id="page1-back">
+              <p>
+                  It was a place where stories were born, and every being had a tale to tell. The first tale we share is about a humble village, nestled between the mountains.
+              </p>
+          </div>
+
+    <!-- Navigation Buttons -->
+    <div class="navigation-buttons">
+        <button id="prevBtn">Previous</button>
+        <button id="nextBtn">Next</button>
+    </div>
+    <!-- Stylish Share Button HTML -->
+    <div class="share-button" id="shareBtn">
+        <div class="share-icon">
+            <img src="https://img.icons8.com/ios-filled/50/ffffff/share.png" alt="Share Icon">
+        </div>
+        <span>Share</span>
+    </div>
+    <div id="google_element"></div> <!-- Google Translate Widget will render here -->
+
+
+    <!-- Google Translate API Script -->
+    <script src="http://translate.google.com/translate_a/element.js?cb=loadGoogleTranslate"></script>
+    <script>
+        // Load Google Translate
+        function loadGoogleTranslate() {
+            new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_element');
+        }
+    
+        // Initialize page array and set currentPage to 0
+        const pages = document.querySelectorAll('.page');
+        let currentPage = 0;
+        let isSpeaking = false; // Track whether audio is currently playing
+        let utterance; // Store the utterance object
+    
+        // Function to update page visibility
+        function updatePages() {
+            pages.forEach((page, index) => {
+                if (index === currentPage || index === currentPage + 1) {
+                    page.style.display = 'block';
+                } else {
+                    page.style.display = 'none';
+                }
+            });
+        }
+    
+        // Initial display
+        updatePages();
+    
+        // Next button event
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            if (currentPage < pages.length - 1) {
+                pages[currentPage].classList.add('flipped');
+                currentPage += 1; // Move to the next page
+                updatePages();
+            }
+        });
+    
+        // Previous button event
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            if (currentPage > 0) {
+                currentPage -= 1;
+                pages[currentPage].classList.remove('flipped');
+                updatePages();
+            }
+        });
+    
+        // Text-to-speech functionality with pause and resume on click
+        document.addEventListener("click", () => {
+            let textToSpeak;
+    
+            // Get text from the current page
+            if (currentPage === 0) {
+                textToSpeak = document.getElementById("text1").innerText;
+            } else if (currentPage === 1) {
+                textToSpeak = document.getElementById("text2").innerText;
+            } else if (currentPage === 2) {
+                textToSpeak = document.getElementById("text3").innerText;
+            }
+    
+            // If speech is paused, resume it
+            if (speechSynthesis.paused) {
+                speechSynthesis.resume();
+            } 
+            // If speaking, pause it
+            else if (isSpeaking) {
+                speechSynthesis.pause();
+            } 
+            // If not speaking, start the speech
+            else if (textToSpeak) {
+                utterance = new SpeechSynthesisUtterance(textToSpeak);
+                utterance.onstart = () => {
+                    isSpeaking = true;
+                };
+                utterance.onend = () => {
+                    isSpeaking = false;
+                };
+                speechSynthesis.speak(utterance);
+            }
+        });
+    
+        // Share functionality
+        const shareBtn = document.getElementById('shareBtn');
+    
+        shareBtn.addEventListener('click', () => {
+            // Check for Web Share API support
+            if (navigator.share) {
+                navigator.share({
+                    text: 'Please read this great article: ',
+                    url: 'https://www.google.com/'
+                }).then(() => {
+                    console.log('Thanks for sharing!');
+                }).catch((err) => console.error(err));
+            } else {
+                // Fallback
+                alert("The current browser does not support the share function. Please, manually share the link.");
+            }
+        });
+    </script>
+    </body>
+    </html>

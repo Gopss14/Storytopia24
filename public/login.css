@@ -1,0 +1,206 @@
+/* .container{
+    width: 420px;
+    background: transparent;
+    border:2px solid rgba(255, 255, 255, .2);
+    backdrop-filter: blur(25px);
+    box-shadow: 0 0 10px rgba(0,0,0, .2);
+    color: #fff;
+    border-radius: 10px;
+    padding: 30px 40px ;
+}
+.container h1{
+    font-size: 36px;
+    text-align: center;
+}
+.container .input-field{
+    position: relative;
+    width: 100%;
+    height: 50px;
+    margin: 30px 0 ;
+} */
+
+/* General reset */
+/* * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    
+    background-image: url(https://i.pinimg.com/736x/69/42/73/694273b6e22410f1d39bef8fb6e2db30.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+img {
+    max-width: 150px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.container {
+    
+    background-image: url(https://i.pinimg.com/564x/d1/ed/66/d1ed662515e0e919b023d0d43ecaa924.jpg);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+    font-size: 2em;
+    color: #333;
+}
+
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+
+.sub {
+    width: 100%;
+    background-color: #3498db;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.sub:hover {
+    background-color: #2980b9;
+}
+
+/* Sign-up link */
+/* h3 {
+    margin-top: 20px;
+    color: #333;
+}
+
+a {
+    color: #3498db;
+    text-decoration: none;
+} */
+
+/* a:hover {
+    text-decoration: underline;
+}  */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-image: url(https://i.pinimg.com/736x/69/42/73/694273b6e22410f1d39bef8fb6e2db30.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+img {
+    max-width: 150px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+/* Container styling */
+.container {
+    background-image: url(https://i.pinimg.com/564x/d1/ed/66/d1ed662515e0e919b023d0d43ecaa924.jpg);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+    font-size: 2em;
+    color: #333;
+}
+
+/* Form input styling */
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+/* Submit button styling */
+.sub {
+    width: 100%;
+    background-color: #3498db;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.sub:hover {
+    background-color: #2980b9;
+}
+
+/* Sign-up link */
+h3 {
+    margin-top: 20px;
+    color: #333;
+}
+
+a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
